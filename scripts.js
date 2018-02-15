@@ -143,23 +143,41 @@ agesApp.displayAllArt = (object, century) => {
       // $('.image-gallery-image-2').attr('src',Harvard[0].records[0].primaryimageurl);
 
       //Empty the two image galleries
-      $('.image-gallery').empty();
-      $('.image-gallery-2').empty();
+      $('.gallery').empty();
+      $('.gallery-2').empty();
 
       //Code that populates a gallery with the 10 images from the Rijks query.
-      for (let i = 0; i < Rijks[0].artObjects.length; i++) {
-         $('.image-gallery').append(`\
-            <div>\
-               <img src=${Rijks[0].artObjects[i].webImage.url}>\
-            </div>\
-            `)
-      };
+      // for (let i = 0; i < Rijks[0].artObjects.length; i++) {
+      //    $('.gallery').append(`\
+      //       <div class="gallery-object">\
+      //          <figure>\
+      //             <img src=${Rijks[0].artObjects[i].webImage.url}>\
+      //          </figure>\
+      //          <div class="gallery-object-text">\
+      //             <h2>Title</h2>\
+      //             <h3>${Rijks[0].artObjects[i].title}</h3>\
+      //             <h2>Artist</h2>\
+      //             <h3>${Rijks[0].artObjects[i].principalOrFirstMaker}</h3>\
+      //             <a class="gallery-object-link" href="${Rijks[0].artObjects[i].links.web}" target="_blank">More Information</a>\
+      //          </div>\
+      //       </div>\
+      //       `)
+      // };
 
       //Code that populates a gallery with the 10 images from the Harvard query.
       for (let i = 0; i < Harvard[0].records.length; i++) {
-         $('.image-gallery').append(`\
-         <div>\
-            <img src=${Harvard[0].records[i].primaryimageurl}>\
+         $('.gallery-2').append(`\
+         <div class="gallery-object">\
+            <figure>\
+               <img src=${Harvard[0].records[i].primaryimageurl}>\
+            </figure>\
+            <div class="gallery-object-text">\
+               <h2>Title</h2>\
+               <h3>${Harvard[0].records[i].title}</h3>\
+               <h2>Artist</h2>\
+               <h3>${Harvard[0].records[i].people}</h3>\
+               <a class="gallery-object-link" href="${Harvard[0].records[i].url}" target="_blank">More Information</a>\
+            </div>\
          </div>\
          `)
       }
