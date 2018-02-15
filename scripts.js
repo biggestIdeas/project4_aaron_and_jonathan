@@ -2,6 +2,27 @@ console.log('test');
 
 const agesApp = {};
 
+agesApp.userInput = '';
+
+agesApp.artPeriod = '';
+
+
+//function that takes the input from the user and puts that into the 'object' value of the data request of the ajax request.
+
+agesApp.userSelection = function () {
+   $('.object-input').change(function () {
+      userInput = $(this).val();
+   })
+}
+
+
+
+//function that takes the input of the slider and puts that into the '_century' value of the data request.
+
+
+
+
+
 // _century -> number between 0 and 21
 agesApp.getRijks = (object, _century) => {
    return $.ajax({
@@ -35,6 +56,16 @@ agesApp.getHarvard = (object, _century) => {
    });
 };
 
+
+
+
+
+
+
+
+
+
+//This function displays the OUTCOME of the search.
 agesApp.displayAllArt = () => {
    $.when(agesApp.getRijks('dog', 18),agesApp.getHarvard('dog', '18th century'))
    .then((Rijks, Harvard) => {
@@ -44,6 +75,10 @@ agesApp.displayAllArt = () => {
       console.log(err1, err2);
    });
 };
+
+
+
+
 
 agesApp.init = () => {
    agesApp.displayAllArt();
