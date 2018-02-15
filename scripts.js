@@ -18,7 +18,8 @@ agesApp.userSelection = function () {
    });
 }
 
-//new line
+//new lin
+
 
 //function that takes the input of the slider and puts that into the '_century' value of the data request.
 agesApp.setupSlider = function(){
@@ -33,6 +34,8 @@ agesApp.setupSlider = function(){
             console.log($(this).val());
             // changeBackground()
       })
+
+      //new line
 }
 
 
