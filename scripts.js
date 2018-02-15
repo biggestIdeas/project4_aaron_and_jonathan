@@ -10,27 +10,27 @@ agesApp.periodArray = {
    '-3': '3rd century BCE',
    '-2': '2nd century BCE',
    '-1': '1st century BCE',
-   '1': '1st century CE',
-   '2': '2nd century CE',
-   '3': '3rd century CE',
-   '4': '4th century CE',
-   '5': '5th century CE',
-   '6': '6th century',
-   '7': '7th century',
-   '8': '8th century',
-   '9': '9th century',
-   '10': '10th century',
-   '11': '11th century',
-   '12': '12th century',
-   '13': '13th century',
-   '14': '14th century',
-   '15': '15th century',
-   '16': '16th century',
-   '17': '17th century',
-   '18': '18th century',
-   '19': '19th century',
-   '20': '20th century',
-   '21': '21st century'
+   '0': '1st century CE',
+   '1': '2nd century CE',
+   '2': '3rd century CE',
+   '3': '4th century CE',
+   '4': '5th century CE',
+   '5': '6th century',
+   '6': '7th century',
+   '7': '8th century',
+   '8': '9th century',
+   '9': '10th century',
+   '10': '11th century',
+   '11': '12th century',
+   '12': '13th century',
+   '13': '14th century',
+   '14': '15th century',
+   '15': '16th century',
+   '16': '17th century',
+   '17': '18th century',
+   '18': '19th century',
+   '19': '20th century',
+   '20': '21st century'
 };
 
 
@@ -54,7 +54,8 @@ agesApp.setupSlider = function(){
       });
 
       $('.century-input').on("input",function(){
-            console.log($(this).val());
+            let inputval = $(this).val();
+            console.log(agesApp.numberToCentury($(this).val()));
             // changeBackground()
       })
 
@@ -122,7 +123,7 @@ agesApp.displayAllArt = (object, century) => {
 };
 
 
-agesApp.numberToCentury = (num) => {
+agesApp.numberToCentury = function(num) {
    //Takes a number and translates to a century string.
    let numString = num.toString();
    return agesApp.periodArray[numString];
@@ -131,7 +132,9 @@ agesApp.numberToCentury = (num) => {
 
 
 agesApp.init = () => {
-   agesApp.displayAllArt();
+ //  agesApp.displayAllArt();
+   agesApp.setupSlider();
+   agesApp.userSelection();
 }
 
 $(function () {
