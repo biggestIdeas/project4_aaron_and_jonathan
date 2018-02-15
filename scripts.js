@@ -10,15 +10,30 @@ agesApp.artPeriod = '';
 //function that takes the input from the user and puts that into the 'object' value of the data request of the ajax request.
 
 agesApp.userSelection = function () {
-   $('.object-input').change(function () {
-      userInput = $(this).val();
-   })
+   $('.object-input').on("change",function () {
+      agesApp.userInput = $(this).val();
+      console.log(agesApp.userInput);
+      // make new ajax request
+      // getArt($('.object-input),agesApp.artPeriod);
+   });
 }
 
 
 
 //function that takes the input of the slider and puts that into the '_century' value of the data request.
+agesApp.setupSlider = function(){
+      $('.century-input').on("change",function(){
+            agesApp.artPeriod = $(this).val();
+            console.log(agesApp.artPeriod);
+            // make new ajax request
+            // getArt($('.object-input),agesApp.artPeriod);
+      });
 
+      $('.century-input').on("input",function(){
+            console.log($(this).val());
+            // changeBackground()
+      })
+}
 
 
 
@@ -58,18 +73,12 @@ agesApp.getHarvard = (object, _century) => {
 
 
 
-
-
-
-
-
-
-
 //This function displays the OUTCOME of the search.
 agesApp.displayAllArt = () => {
    $.when(agesApp.getRijks('dog', 18),agesApp.getHarvard('dog', '18th century'))
    .then((Rijks, Harvard) => {
       console.log(Rijks, Harvard);
+      // populate images
    })
    .fail((err1, err2) => {
       console.log(err1, err2);
@@ -78,10 +87,10 @@ agesApp.displayAllArt = () => {
 
 
 
-
-
 agesApp.init = () => {
-   agesApp.displayAllArt();
+  // agesApp.displayAllArt();
+  agesApp.userSelection();
+  agesApp.setupSlider();
 }
 
 $(function () {
