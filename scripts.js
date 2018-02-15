@@ -18,8 +18,6 @@ agesApp.userSelection = function () {
    });
 }
 
-
-
 //function that takes the input of the slider and puts that into the '_century' value of the data request.
 agesApp.setupSlider = function(){
       $('.century-input').on("change",function(){
