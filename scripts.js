@@ -105,18 +105,46 @@ agesApp.getHarvard = (object, _century) => {
 
 
 
-//This function displays the OUTCOME of the search.
+//This function displays the art on the page.
 agesApp.displayAllArt = (object, century) => {
    
+   //Transforms the slider input to a century name string.
    let centuryToString = agesApp.numberToCentury(century);
 
-
+   //Awaits the promise from the ajax call
    $.when(agesApp.getRijks(object, century),agesApp.getHarvard(object,centuryToString))
+
+   //returning the promises from both Rijks and Harvard
    .then((Rijks, Harvard) => {
-      //Grabs the first webImage from the 1st item of the Rijks array
-      $('.image-gallery-image').attr('src',Rijks[0].artObjects[0].webImage.url);
-      //Grab the first image from the 1st item of the array from the Harvard query
       console.log(Rijks, Harvard);
+
+      //Grabs the first webImage from the 1st item of the Rijks array
+      // $('.image-gallery-image').attr('src',Rijks[0].artObjects[0].webImage.url);
+
+      //Grab the first image from the 1st item of the array from the Harvard query
+      // $('.image-gallery-image-2').attr('src',Harvard[0].records[0].primaryimageurl);
+
+      //Empty the two image galleries
+      $('.image-gallery').empty();
+      $('.image-gallery-2').empty();
+
+      //Code that populates a gallery with the 10 images from the Rijks query.
+      for (let i = 0; i < Rijks[0].artObjects.length; i++) {
+         $('.image-gallery').append(`\
+            <div>\
+               <img src=${Rijks[0].artObjects[i].webImage.url}>\
+            </div>\
+            `)
+      };
+
+      //Code that populates a gallery with the 10 images from the Harvard query.
+      for (let i = 0; i < Harvard[0].records.length; i++) {
+         $('.image-gallery').append(`\
+         <div>\
+            <img src=${Harvard[0].records[i].primaryimageurl}>\
+         </div>\
+         `)
+      }
    })
    .fail((err1, err2) => {
       console.log(err1, err2);
