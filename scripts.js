@@ -42,8 +42,6 @@ agesApp.userSelection = function () {
    })
 }
 
-
-
 //function that takes the input of the slider and puts that into the '_century' value of the data request.
 
 
