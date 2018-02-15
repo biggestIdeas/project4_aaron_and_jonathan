@@ -1,5 +1,3 @@
-console.log('test');
-
 const agesApp = {};
 
 agesApp.userInput = '';
@@ -38,7 +36,8 @@ agesApp.periodArray = {
 
 agesApp.userSelection = function () {
    $('.object-input').change(function () {
-      userInput = $(this).val();
+      agesApp.displayAllArt($(this).val(), $('.century-input').val());
+      agesApp.userInput = $(this).val();
    })
 }
 
@@ -47,8 +46,10 @@ agesApp.userSelection = function () {
 
 agesApp.setupSlider = function(){
       $('.century-input').on("change",function(){
+            agesApp.displayAllArt($('.object-input').val(), $(this).val());
             agesApp.artPeriod = $(this).val();
-            console.log(agesApp.artPeriod);
+            // agesApp.artPeriod = $(this).val();
+            // console.log('a change was made');
             // make new ajax request
             // getArt($('.object-input),agesApp.artPeriod);
       });
@@ -62,10 +63,7 @@ agesApp.setupSlider = function(){
       //new line
 }
 
-
-
-
-// _century -> number between 0 and 21
+// _century -> number between -3 and 20
 agesApp.getRijks = (object, _century) => {
    return $.ajax({
       url: 'https://www.rijksmuseum.nl/api/en/collection',
@@ -109,17 +107,20 @@ agesApp.getHarvard = (object, _century) => {
 
 //This function displays the OUTCOME of the search.
 agesApp.displayAllArt = (object, century) => {
-   agesApp.numberToCentury();
+   
+   let centuryToString = agesApp.numberToCentury(century);
 
 
-
-   // $.when(agesApp.getRijks(),agesApp.getHarvard())
-   // .then((Rijks, Harvard) => {
-   //    console.log(Rijks, Harvard);
-   // })
-   // .fail((err1, err2) => {
-   //    console.log(err1, err2);
-   // });
+   $.when(agesApp.getRijks(object, century),agesApp.getHarvard(object,centuryToString))
+   .then((Rijks, Harvard) => {
+      //Grabs the first webImage from the 1st item of the Rijks array
+      $('.image-gallery-image').attr('src',Rijks[0].artObjects[0].webImage.url);
+      //Grab the first image from the 1st item of the array from the Harvard query
+      console.log(Rijks, Harvard);
+   })
+   .fail((err1, err2) => {
+      console.log(err1, err2);
+   });
 };
 
 
@@ -132,7 +133,6 @@ agesApp.numberToCentury = function(num) {
 
 
 agesApp.init = () => {
- //  agesApp.displayAllArt();
    agesApp.setupSlider();
    agesApp.userSelection();
 }
