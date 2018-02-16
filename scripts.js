@@ -74,6 +74,7 @@ agesApp.setupSlider = function(){
       $('.century-input').on("input",function(){
             let inputval = $(this).val();
             console.log(agesApp.numberToCentury($(this).val()));
+            console.log($(this).val());
             agesApp.applyPeriodStyle(inputval);
             agesApp.displayPeriodToSearchIn(inputval);
             // changeBackground()
@@ -198,70 +199,62 @@ agesApp.numberToCentury = function(num) {
 
 agesApp.setPeriodStyles = function(){
       // 1) Ancient
-      agesApp.addStyleForPeriod(-3,"background","bg-ancient");
-      agesApp.addStyleForPeriod(-2,"background","bg-ancient");
-      agesApp.addStyleForPeriod(-1,"background","bg-ancient");
-
       agesApp.addStyleForPeriod(-3,"header","header-ancient");
       agesApp.addStyleForPeriod(-2,"header","header-ancient");
       agesApp.addStyleForPeriod(-1,"header","header-ancient");
 
       // 2) Classical
-      agesApp.addStyleForPeriod(0,"background","bg-classical");
-      agesApp.addStyleForPeriod(1,"background","bg-classical");
-      agesApp.addStyleForPeriod(2,"background","bg-classical");
-      agesApp.addStyleForPeriod(3,"background","bg-classical");
-
       agesApp.addStyleForPeriod(0,"header","header-classical");
       agesApp.addStyleForPeriod(1,"header","header-classical");
       agesApp.addStyleForPeriod(2,"header","header-classical");
-      agesApp.addStyleForPeriod(3,"header","header-classical");
-      
+      agesApp.addStyleForPeriod(3,"header","header-classical");   
+
       // 3) Dark Ages
-      agesApp.addStyleForPeriod(4,"background","bg-dark");
-      agesApp.addStyleForPeriod(5,"background","bg-dark");
-      agesApp.addStyleForPeriod(6,"background","bg-dark");
-      agesApp.addStyleForPeriod(7,"background","bg-dark");
-      agesApp.addStyleForPeriod(8,"background","bg-dark");
-      agesApp.addStyleForPeriod(9,"background","bg-dark");
-      agesApp.addStyleForPeriod(10,"background","bg-dark");
+      agesApp.addStyleForPeriod(4,"header","header-dark-ages");
+      agesApp.addStyleForPeriod(5,"header","header-dark-ages");
+      agesApp.addStyleForPeriod(6,"header","header-dark-ages");
+      agesApp.addStyleForPeriod(7,"header","header-dark-ages");
+      agesApp.addStyleForPeriod(8,"header","header-dark-ages");
+      agesApp.addStyleForPeriod(9,"header","header-dark-ages");
+      agesApp.addStyleForPeriod(10,"header","header-dark-ages");
+
       // 4) Medieval
-      agesApp.addStyleForPeriod(11,"background","bg-medieval");
-      agesApp.addStyleForPeriod(12,"background","bg-medieval");
-      agesApp.addStyleForPeriod(13,"background","bg-medieval");
+      agesApp.addStyleForPeriod(11,"header","header-medieval");
+      agesApp.addStyleForPeriod(12,"header","header-medieval");
+      agesApp.addStyleForPeriod(13,"header","header-medieval");
+
       // 5) Renaissance
-      agesApp.addStyleForPeriod(14,"background","bg-renaissance");
-      agesApp.addStyleForPeriod(15,"background","bg-renaissance");
-      agesApp.addStyleForPeriod(16,"background","bg-renaissance");
-      // 6) 1600s
-      agesApp.addStyleForPeriod(17,"background","bg-17");
-      // 7) 1700s
-      agesApp.addStyleForPeriod(18,"background","bg-18");
-      // 8) 1800s
+      agesApp.addStyleForPeriod(14,"header","header-renaissance");
+      agesApp.addStyleForPeriod(15,"header","header-renaissance");
+      agesApp.addStyleForPeriod(16,"header","header-renaissance");
+
+      // 6) 1700s
+      agesApp.addStyleForPeriod(17,"header","header-rococo");
+      // 7) 1800s
+      agesApp.addStyleForPeriod(18,"header","header-rococo");
+      // 8) 1900s
       agesApp.addStyleForPeriod(19,"background","bg-19");
-      // 9) 1900s
-      agesApp.addStyleForPeriod(19,"background","bg-20");
       // 9) 2000s
-      agesApp.addStyleForPeriod(20,"background","bg-21");
+      agesApp.addStyleForPeriod(20,"background","bg-20");
 
       
 }
 
 agesApp.applyPeriodStyle = function(periodNumber){
       let styleObj = agesApp.getStylesForPeriod(periodNumber);
-      let bgStyle = styleObj["background"];
+      //let bgStyle = styleObj["background"];
       let headerStyle = styleObj["header"];
 
       if(agesApp.lastSelectedPeriod !=null){
             let lastStyleObj = agesApp.getStylesForPeriod(agesApp.lastSelectedPeriod);
-            let lastBgStyle = lastStyleObj["background"];
+           // let lastBgStyle = lastStyleObj["background"];
             let lastHeaderStyle = lastStyleObj["header"];
-            $('body').removeClass(lastBgStyle);
+           // $('body').removeClass(lastBgStyle);
             $('.sub-header').removeClass(lastHeaderStyle);
       }
       agesApp.lastSelectedPeriod = periodNumber;
 
-      $('body').addClass(bgStyle);
+     // $('body').addClass(bgStyle);
       $('.sub-header').addClass(headerStyle);
       console.log($('body').attr('class'));
 }
