@@ -49,29 +49,32 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
   }
 
 .input{
+    h2{
+        text-align : center;
+    }
     padding : 40px;
     padding-top : 20px;
-    // border-style : solid;
-    // border-width: 1px;
+    background-color : rgb(252, 252, 227)
+
 }
 
 .page-header{
     background-color : black;
-    h2{
-        text-align : left;
-        font-size : 16px;
-        font-style: italic;
-        color : white;
-    }
+    position : fixed;
+    width : 100%;
+    height : 10px;
 }
 
 .object-input{
     border-style : none none solid none;
+    text-align : center;
+    background :  none;
 }
 
 .object-input-container{
     text-align : center;
     margin-top : 40px;
+    height : 60px;
 }
 
 .century-input-container{
@@ -80,7 +83,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 .sub-header{
     height : 50px;
-    transition : all 0.5s;
+    transition : background 0.5s;
 }
 
 .header-ancient{
@@ -115,18 +118,50 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
     background-image : url("../assets/header-rococo.jpg");
 }
 
-.bg--3{
-   // background-color : red;
+.header-victorian{
+    background-image : url("../assets/header-victorian.jpg");
 }
 
-.bg--2{
-    background-color : blue;
+.header-art-deco{
+    background-image : url("../assets/header-art-deco.jpg");
+    background-size : 200px 150px;
 }
 
-.bg--1{
-    background-color : yellow;
+.header-modern{
+    background-image : url("../assets/header-modern.jpg");
+    background-size : 200px 150px;
 }
 
-.bg-0{
-    background-color : green;
+.font-ancient{
+   // color : blue;
+    font-family: Papyrus, fantasy;
+    font-size : 24px;
 }
+
+.font-classical{
+    // color : blue;
+     font-family: 'Times New Roman';
+     font-size : 24px;
+     text-transform : uppercase;
+ }
+
+.font-dark-ages{
+    font-family: 'MedievalSharp', cursive;
+    font-size : 24px;
+}
+
+.font-medieval{
+    font-family: 'UnifrakturCook', cursive;
+    font-size : 24px;
+}
+
+.font-renaissance{
+    font-family: 'Agincourt', cursive;
+    font-size : 24px;    
+}
+
+.font-20th-century{
+    font-family : 'Courier', sans-serif;
+    font-size : 24px;
+}
+

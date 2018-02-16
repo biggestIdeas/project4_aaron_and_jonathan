@@ -84,6 +84,8 @@ agesApp.setupSlider = function(){
             // changeBackground()
       })
 
+
+
       //new line
 }
 
@@ -245,11 +247,21 @@ agesApp.setPeriodStyles = function(){
       agesApp.addStyleForPeriod(-2,"header","header-ancient");
       agesApp.addStyleForPeriod(-1,"header","header-ancient");
 
+
+      agesApp.addStyleForPeriod(-3,"century-to-search","font-ancient");
+      agesApp.addStyleForPeriod(-2,"century-to-search","font-ancient");
+      agesApp.addStyleForPeriod(-1,"century-to-search","font-ancient");
+
       // 2) Classical
       agesApp.addStyleForPeriod(0,"header","header-classical");
       agesApp.addStyleForPeriod(1,"header","header-classical");
       agesApp.addStyleForPeriod(2,"header","header-classical");
       agesApp.addStyleForPeriod(3,"header","header-classical");   
+
+      agesApp.addStyleForPeriod(0,"century-to-search","font-classical");
+      agesApp.addStyleForPeriod(1,"century-to-search","font-classical");
+      agesApp.addStyleForPeriod(2,"century-to-search","font-classical");
+      agesApp.addStyleForPeriod(3,"century-to-search","font-classical"); 
 
       // 3) Dark Ages
       agesApp.addStyleForPeriod(4,"header","header-dark-ages");
@@ -260,24 +272,43 @@ agesApp.setPeriodStyles = function(){
       agesApp.addStyleForPeriod(9,"header","header-dark-ages");
       agesApp.addStyleForPeriod(10,"header","header-dark-ages");
 
+      agesApp.addStyleForPeriod(4,"century-to-search","font-dark-ages");
+      agesApp.addStyleForPeriod(5,"century-to-search","font-dark-ages");
+      agesApp.addStyleForPeriod(6,"century-to-search","font-dark-ages");
+      agesApp.addStyleForPeriod(7,"century-to-search","font-dark-ages");
+      agesApp.addStyleForPeriod(8,"century-to-search","font-dark-ages");
+      agesApp.addStyleForPeriod(9,"century-to-search","font-dark-ages");
+      agesApp.addStyleForPeriod(10,"century-to-search","font-dark-ages");
+
       // 4) Medieval
       agesApp.addStyleForPeriod(11,"header","header-medieval");
       agesApp.addStyleForPeriod(12,"header","header-medieval");
       agesApp.addStyleForPeriod(13,"header","header-medieval");
+
+      agesApp.addStyleForPeriod(11,"century-to-search","font-medieval");
+      agesApp.addStyleForPeriod(12,"century-to-search","font-medieval");
+      agesApp.addStyleForPeriod(13,"century-to-search","font-medieval");
 
       // 5) Renaissance
       agesApp.addStyleForPeriod(14,"header","header-renaissance");
       agesApp.addStyleForPeriod(15,"header","header-renaissance");
       agesApp.addStyleForPeriod(16,"header","header-renaissance");
 
+      agesApp.addStyleForPeriod(14,"century-to-search","font-medieval");
+      agesApp.addStyleForPeriod(15,"century-to-search","font-medieval");
+      agesApp.addStyleForPeriod(16,"century-to-search","font-medieval");
+
       // 6) 1700s
       agesApp.addStyleForPeriod(17,"header","header-rococo");
       // 7) 1800s
-      agesApp.addStyleForPeriod(18,"header","header-rococo");
+      agesApp.addStyleForPeriod(18,"header","header-victorian");
+           
       // 8) 1900s
-      agesApp.addStyleForPeriod(19,"background","bg-19");
+      agesApp.addStyleForPeriod(19,"header","header-art-deco");
+      agesApp.addStyleForPeriod(18,"century-to-search","font-20th-century");
+
       // 9) 2000s
-      agesApp.addStyleForPeriod(20,"background","bg-20");
+      agesApp.addStyleForPeriod(20,"header","header-modern");
 
       
 }
@@ -286,18 +317,22 @@ agesApp.applyPeriodStyle = function(periodNumber){
       let styleObj = agesApp.getStylesForPeriod(periodNumber);
       //let bgStyle = styleObj["background"];
       let headerStyle = styleObj["header"];
+      let centuryToSearch = styleObj["century-to-search"];
 
       if(agesApp.lastSelectedPeriod !=null){
             let lastStyleObj = agesApp.getStylesForPeriod(agesApp.lastSelectedPeriod);
            // let lastBgStyle = lastStyleObj["background"];
             let lastHeaderStyle = lastStyleObj["header"];
+            let lastCenturyToSearch = lastStyleObj["century-to-search"];
            // $('body').removeClass(lastBgStyle);
             $('.sub-header').removeClass(lastHeaderStyle);
+            $('.century-to-search').removeClass(lastCenturyToSearch);
       }
       agesApp.lastSelectedPeriod = periodNumber;
 
      // $('body').addClass(bgStyle);
       $('.sub-header').addClass(headerStyle);
+      $('.century-to-search').addClass(centuryToSearch);
       console.log($('body').attr('class'));
 }
 
@@ -310,6 +345,9 @@ agesApp.init = () => {
    agesApp.setupSlider();
    agesApp.userSelection();
    agesApp.setPeriodStyles();
+
+   agesApp.applyPeriodStyle($('.century-input').val());
+   agesApp.displayPeriodToSearchIn($('.century-input').val());
 
    console.log(agesApp.periodStyles);
 }
