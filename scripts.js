@@ -4,6 +4,10 @@ agesApp.userInput = '';
 
 agesApp.artPeriod = '';
 
+agesApp.rijksArt = [];
+
+agesApp.harvardArt = [];
+
 agesApp.periodArray = {
    '-3': '3rd century BCE',
    '-2': '2nd century BCE',
@@ -115,10 +119,73 @@ agesApp.getHarvard = (object, _century) => {
    });
 };
 
+agesApp.populateRijks = (item) => {
+   $('.gallery').append(`\
+      <div class="gallery-object">\
+         <figure>\
+            <img src=${item.webImage.url}>\
+         </figure>\
+         <div class="gallery-object-text">\
+            <h2>Rijks Title</h2>\
+            <h3>${item.title}</h3>\
+            <h2>Artist</h2>\
+            <h3>${item.principalOrFirstMaker}</h3>\
+            <a class="gallery-object-link" href="${item.links.web}" target="_blank">More Information</a>\
+         </div>\
+      </div>\
+   `)
+}
 
+// agesApp.populateRijks = (itemNum) => {
+//    $('.gallery').append(`\
+//       <div class="gallery-object">\
+//          <figure>\
+//             <img src=${Rijks[0].artObjects[itemNum].webImage.url}>\
+//          </figure>\
+//          <div class="gallery-object-text">\
+//             <h2>Rijks Title</h2>\
+//             <h3>${Rijks[0].artObjects[itemNum].title}</h3>\
+//             <h2>Artist</h2>\
+//             <h3>${Rijks[0].artObjects[itemNum].principalOrFirstMaker}</h3>\
+//             <a class="gallery-object-link" href="${Rijks[0].artObjects[itemNum].links.web}" target="_blank">More Information</a>\
+//          </div>\
+//       </div>\
+//    `)
+// }
 
+agesApp.populateHarvard = (item) => {
+   $('.gallery').append(`\
+      <div class="gallery-object">\
+         <figure>\
+            <img src=${item.primaryimageurl}>\
+         </figure>\
+         <div class="gallery-object-text">\
+            <h2>Harvard Title</h2>\
+            <h3>${item.title}</h3>\
+            <h2>Artist</h2>\
+            <h3>${item.people}</h3>\
+            <a class="gallery-object-link" href="${item.url}" target="_blank">More Information</a>\
+         </div>\
+      </div>\
+   `)
+}
 
-
+// agesApp.populateHarvard = () => {
+//    $('.gallery-2').append(`\
+//       <div class="gallery-object">\
+//          <figure>\
+//             <img src=${Harvard[0].records[itemNum].primaryimageurl}>\
+//          </figure>\
+//          <div class="gallery-object-text">\
+//             <h2>Harvard Title</h2>\
+//             <h3>${Harvard[0].records[itemNum].title}</h3>\
+//             <h2>Artist</h2>\
+//             <h3>${Harvard[0].records[itemNum].people}</h3>\
+//             <a class="gallery-object-link" href="${Harvard[0].records[itemNum].url}" target="_blank">More Information</a>\
+//          </div>\
+//       </div>\
+//    `)
+// }
 
 
 
@@ -137,57 +204,32 @@ agesApp.displayAllArt = (object, century) => {
    .then((Rijks, Harvard) => {
       console.log(Rijks, Harvard);
 
-      //Grabs the first webImage from the 1st item of the Rijks array
-      // $('.image-gallery-image').attr('src',Rijks[0].artObjects[0].webImage.url);
-
-      //Grab the first image from the 1st item of the array from the Harvard query
-      // $('.image-gallery-image-2').attr('src',Harvard[0].records[0].primaryimageurl);
+      rijksObjects = Rijks[0].artObjects;
+      harvardObjects = Harvard[0].records;
 
       //Empty the two image galleries
       $('.gallery').empty();
-      $('.gallery-2').empty();
+      // $('.gallery-2').empty();
 
-      //Code that populates a gallery with the 10 images from the Rijks query.
-      // for (let i = 0; i < Rijks[0].artObjects.length; i++) {
-      //    $('.gallery').append(`\
-      //       <div class="gallery-object">\
-      //          <figure>\
-      //             <img src=${Rijks[0].artObjects[i].webImage.url}>\
-      //          </figure>\
-      //          <div class="gallery-object-text">\
-      //             <h2>Title</h2>\
-      //             <h3>${Rijks[0].artObjects[i].title}</h3>\
-      //             <h2>Artist</h2>\
-      //             <h3>${Rijks[0].artObjects[i].principalOrFirstMaker}</h3>\
-      //             <a class="gallery-object-link" href="${Rijks[0].artObjects[i].links.web}" target="_blank">More Information</a>\
-      //          </div>\
-      //       </div>\
-      //       `)
-      // };
 
-      //Code that populates a gallery with the 10 images from the Harvard query.
-      for (let i = 0; i < Harvard[0].records.length; i++) {
-         $('.gallery-2').append(`\
-         <div class="gallery-object">\
-            <figure>\
-               <img src=${Harvard[0].records[i].primaryimageurl}>\
-            </figure>\
-            <div class="gallery-object-text">\
-               <h2>Title</h2>\
-               <h3>${Harvard[0].records[i].title}</h3>\
-               <h2>Artist</h2>\
-               <h3>${Harvard[0].records[i].people}</h3>\
-               <a class="gallery-object-link" href="${Harvard[0].records[i].url}" target="_blank">More Information</a>\
-            </div>\
-         </div>\
-         `)
-      }
-   })
-   .fail((err1, err2) => {
-      console.log(err1, err2);
+      //A variable for the following if loops.
+      let i = 0;
+      //while one of the responses still has objects.
+      while (rijksObjects.length > 0 || harvardObjects.length > 0) {
+         if (i % 2 === 0 && rijksObjects.length > 0) {
+            console.log('R');
+            let rPop = rijksObjects.pop();
+            agesApp.populateRijks(rPop);
+         }
+         if (i % 2 === 1 && harvardObjects.length > 0) {
+            console.log('H');
+            let hPop = harvardObjects.pop();
+            agesApp.populateHarvard(hPop);
+         }
+         i++;
+      };
    });
-};
-
+}
 
 agesApp.numberToCentury = function(num) {
    //Takes a number and translates to a century string.
