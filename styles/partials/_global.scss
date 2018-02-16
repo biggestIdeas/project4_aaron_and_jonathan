@@ -69,13 +69,26 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
     border-style : none none solid none;
     text-align : center;
     background :  none;
+    padding: 5px;
+    font-size: 25px;
 }
 
 .object-input-container{
     text-align : center;
-    margin-top : 40px;
+    max-width: 600px;
+    margin: 40px auto 0;
     height : 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    span:nth-of-type(1) {
+      //  font-style: italic;
+       font-size: 25px;
+    }
 }
+
+
 
 .century-input-container{
     margin-top : 40px;
