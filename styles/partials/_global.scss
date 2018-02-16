@@ -51,8 +51,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 .input{
     padding : 40px;
     padding-top : 20px;
-    border-style : solid;
-    border-width: 1px;
+    // border-style : solid;
+    // border-width: 1px;
 }
 
 .page-header{
@@ -80,20 +80,43 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 
 .sub-header{
     height : 50px;
+    transition : all 0.5s;
 }
 
 .header-ancient{
     background-image : url("../assets/header-ancient2.jpg");
-    background-size : contain;
+    background-size : 150px 100px;
+   background-position : bottom;
+   background-repeat : repeat;
 }
 
 .header-classical{
     background-image : url("../assets/header-ancient.jpg");
-   // background-size : cover;    
+  //  background-size : contain;    
+}
+
+.header-medieval{
+    background-image : url("../assets/header-medieval.jpg");
+    background-size : 250px 250px;
+}
+
+.header-dark-ages{
+    background-image : url("../assets/header-dark-ages.jpg");
+    background-size : 400px 400px;
+    background-position : middle;
+}
+
+.header-renaissance{
+    background-image : url("../assets/header-renaissance.jpg");
+   // background-size : 100px 250px;
+}
+
+.header-rococo{
+    background-image : url("../assets/header-rococo.jpg");
 }
 
 .bg--3{
-    background-color : red;
+   // background-color : red;
 }
 
 .bg--2{
