@@ -1,13 +1,6 @@
 const agesApp = {};
 
-agesApp.userInput = '';
-
-agesApp.artPeriod = '';
-
-agesApp.rijksArt = [];
-
-agesApp.harvardArt = [];
-
+// data structure to convert integers to strings (primarily for Harvard Art API)
 agesApp.periodArray = {
    '-3': '3rd century BCE',
    '-2': '2nd century BCE',
@@ -35,10 +28,14 @@ agesApp.periodArray = {
    '20': '21st century'
 };
 
+// object to contain the styles that pertain to various periods that can be selected
 agesApp.periodStyles = {};
 
+// the last time period in which the user has decided to search
 agesApp.lastSelectedPeriod = null;
 
+// adds a style for a given periodNumber and elementType
+// (i.e) addStyleForPeriod(4,"footer","footer-style-4");
 agesApp.addStyleForPeriod = function(periodNumber,elementType,styleClass){
       // if there isnt a style for given period, make one
       if(!agesApp.periodStyles[periodNumber.toString()]){
@@ -48,49 +45,34 @@ agesApp.addStyleForPeriod = function(periodNumber,elementType,styleClass){
       agesApp.periodStyles[periodNumber.toString()][elementType] = styleClass;     
 }
 
+// get the styles for a given periodNumber
 agesApp.getStylesForPeriod = function(periodNumber){
       return agesApp.periodStyles[periodNumber.toString()];
 }
 
-
-//function that takes the input from the user and puts that into the 'object' value of the data request of the ajax request.
-
-agesApp.userSelection = function () {
+// applies event listeners to object text input
+agesApp.setupObjectInput = function () {
    $('.object-input').change(function () {
       agesApp.displayAllArt($(this).val(), $('.century-input').val());
-      agesApp.userInput = $(this).val();
    })
 }
 
-
-//function that takes the input of the slider and puts that into the '_century' value of the data request.
-
+// applies event listeners to century slider input
 agesApp.setupSlider = function(){
       $('.century-input').on("change",function(){
             agesApp.displayAllArt($('.object-input').val(), $(this).val());
-            agesApp.artPeriod = $(this).val();
-            // agesApp.artPeriod = $(this).val();
-            // console.log('a change was made');
-            // make new ajax request
-            // getArt($('.object-input),agesApp.artPeriod);
       });
 
       $('.century-input').on("input",function(){
             let inputval = $(this).val();
-            console.log(agesApp.numberToCentury($(this).val()));
-            console.log($(this).val());
             agesApp.applyPeriodStyle(inputval);
             agesApp.displayPeriodToSearchIn(inputval);
-            // changeBackground()
       })
-
-
-
-      //new line
 }
 
-// _century -> number between -3 and 20
-agesApp.getRijks = (object, _century) => {
+// for a given object query and century query, return a promise from the Rijksmuseum API
+// (string, number) -> Ajax Promise
+agesApp.getArtFromRijksmuesumAPI = (object, _century) => {
    return $.ajax({
       url: 'https://www.rijksmuseum.nl/api/en/collection',
       dataType: 'json',
@@ -105,11 +87,9 @@ agesApp.getRijks = (object, _century) => {
    });
 };
 
-// _century requires special formatting
-// in the early centuries, requires CE and BCE 
-// 3rd vs. 4th
-// full argument looks like '11th century' or '3rd century CE' or '2nd century BCE'
-agesApp.getHarvard = (object, _century) => {
+// for a given object query and century query, return a promise from the Harvard Art Museum API
+// (string, string) -> Ajax Promise
+agesApp.getArtFromHarvardArtAPI = (object, _century) => {
    return $.ajax({
       url : "https://api.harvardartmuseums.org/object",
       format : "json",
@@ -122,7 +102,9 @@ agesApp.getHarvard = (object, _century) => {
    });
 };
 
-agesApp.populateRijks = (item) => {
+// add an item from a Rijksmuseum API response to DOM
+// (object) -> null
+agesApp.displayRijksmuseumArtObject = (item) => {
    $('.gallery').append(`\
       <div class="gallery-object">\
          <figure>\
@@ -139,60 +121,65 @@ agesApp.populateRijks = (item) => {
    `)
 }
 
-   // item.filter((piece) => {
-   //    return item.primaryimageurl !== null
-   // })
+// add an item from a Harvard Art API response to DOM
+// (object) -> null
+agesApp.displayHarvardArtObject = (item) => {
+      const titleLabel = $('<h2>').text('Harvard Title');
+      const title = $('<h3>').text(item.title);
+      const artistLabel = $('<h2>').text('Artist');
+      const artLink = $('<a class="gallery-object-link" target="_blank">').attr('href',item.url).text('More Information');
 
-agesApp.populateHarvard = (item) => {
-   const image = $('<img>').attr('src',item.primaryimageurl);
-   const titleLabel = $('<h2>').text('Harvard Title');
-   const title = $('<h3>').text(item.title);
-   const artistLabel = $('<h2>').text('Artist');
-   const artLink = $('<a class="gallery-object-link" target="_blank">').attr('href',item.url).text('More Information');
-   const imgFigure = $('<figure>').append(image);
-   const textBlock = $('<div class="gallery-object-text">').append(titleLabel, title);
+      const container = $('<div class="gallery-object">');
 
-   // Check to see if there is an artist
-   if (item.people) {
-      const artist = $('<h3>').text(item.people[0].name);
-      textBlock.append(artistLabel, artist);
-   }
-   textBlock.append(artLink);
+      const textBlock = $('<div class="gallery-object-text">').append(titleLabel, title);
+      if (item.people) {
+            const artist = $('<h3>').text(item.people[0].name);
+            textBlock.append(artistLabel, artist);
+      }
+      textBlock.append(artLink);
 
-   const container = $('<div class="gallery-object">').append(imgFigure, textBlock);
-   $('.gallery').append(container);
+      if(item.primaryimageurl !== null){
+            const image = $('<img>').attr('src',item.primaryimageurl);
+            const imgFigure = $('<figure>').append(image);
+            container.append(imgFigure,textBlock);
+            $('.gallery').append(container);
+      }
 }
 
 //This function displays the art on the page.
 agesApp.displayAllArt = (object, century) => {
-   //Transforms the slider input to a century name string.
-   let centuryToString = agesApp.numberToCentury(century);
-   //Awaits the promise from the ajax call
-   $.when(agesApp.getRijks(object, century),agesApp.getHarvard(object,centuryToString))
-   //returning the promises from both Rijks and Harvard
-   .then((Rijks, Harvard) => {
-      rijksObjects = Rijks[0].artObjects.slice();
-      harvardObjects = Harvard[0].records.slice();
-      //Empty the image galleries
-      $('.gallery').empty();
-      // A variable for the following "if" loops.
+      //Transforms the slider input to a century name string.
+      let centuryToString = agesApp.numberToCentury(century);
+
+      let rijksmuseumRequest = agesApp.getArtFromRijksmuesumAPI(object, century);
+      let harvardRequest = agesApp.getArtFromHarvardArtAPI(object,centuryToString);
+
+      $.when(rijksmuseumRequest,harvardRequest)
+      //returning the promises from both Rijks and Harvard
+            .then((rijks, harvard) => {
+                  $('.gallery').empty();
+                  agesApp.weaveAndDisplayResults(rijks,harvard);
+            });
+}
+
+// weave the and display the results from both API's
+agesApp.weaveAndDisplayResults = function(rijksResponse,harvardResponse){
+      let rijksObjects = rijksResponse[0].artObjects.slice();
+      let harvardObjects = harvardResponse[0].records.slice();
       let i = 0;
       //while one of the responses still has objects.
       while (rijksObjects.length > 0 || harvardObjects.length > 0) {
-         if (i % 2 === 0 && rijksObjects.length > 0) {
-            // console.log('R');
-            let rPop = rijksObjects.pop();
-            agesApp.populateRijks(rPop);
-         }
-         if (i % 2 === 1 && harvardObjects.length > 0) {
-            // console.log('H');
-            let hPop = harvardObjects.pop();
-            console.log(hPop);
-            agesApp.populateHarvard(hPop);
-         }
-         i++;
-      };
-   });
+            if (i % 2 === 0 && rijksObjects.length > 0) {
+                  let rPop = rijksObjects.pop();
+                  agesApp.displayRijksmuseumArtObject(rPop);
+            }
+            if (i % 2 === 1 && harvardObjects.length > 0) {
+                  let hPop = harvardObjects.pop();
+                  console.log(hPop);
+                  agesApp.displayHarvardArtObject(hPop);
+            }
+            i++;
+      };      
 }
 
 agesApp.numberToCentury = function(num) {
@@ -261,15 +248,19 @@ agesApp.setPeriodStyles = function(){
 
       // 6) 1700s
       agesApp.addStyleForPeriod(17,"header","header-rococo");
+      agesApp.addStyleForPeriod(17,"century-to-search","font-medieval");
+
       // 7) 1800s
       agesApp.addStyleForPeriod(18,"header","header-victorian");
+      agesApp.addStyleForPeriod(18,"century-to-search","font-19th-century");
            
       // 8) 1900s
       agesApp.addStyleForPeriod(19,"header","header-art-deco");
-      agesApp.addStyleForPeriod(18,"century-to-search","font-20th-century");
+      agesApp.addStyleForPeriod(19,"century-to-search","font-20th-century");
 
       // 9) 2000s
       agesApp.addStyleForPeriod(20,"header","header-modern");
+      agesApp.addStyleForPeriod(20,"century-to-search","font-21st-century");
 
       
 }
@@ -304,7 +295,7 @@ agesApp.displayPeriodToSearchIn = function(periodNumber){
 
 agesApp.init = () => {
    agesApp.setupSlider();
-   agesApp.userSelection();
+   agesApp.setupObjectInput();
    agesApp.setPeriodStyles();
 
    agesApp.applyPeriodStyle($('.century-input').val());
