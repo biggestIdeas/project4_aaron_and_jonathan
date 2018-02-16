@@ -137,94 +137,55 @@ agesApp.populateRijks = (item) => {
    `)
 }
 
-// agesApp.populateRijks = (itemNum) => {
-//    $('.gallery').append(`\
-//       <div class="gallery-object">\
-//          <figure>\
-//             <img src=${Rijks[0].artObjects[itemNum].webImage.url}>\
-//          </figure>\
-//          <div class="gallery-object-text">\
-//             <h2>Rijks Title</h2>\
-//             <h3>${Rijks[0].artObjects[itemNum].title}</h3>\
-//             <h2>Artist</h2>\
-//             <h3>${Rijks[0].artObjects[itemNum].principalOrFirstMaker}</h3>\
-//             <a class="gallery-object-link" href="${Rijks[0].artObjects[itemNum].links.web}" target="_blank">More Information</a>\
-//          </div>\
-//       </div>\
-//    `)
-// }
+   // item.filter((piece) => {
+   //    return item.primaryimageurl !== null
+   // })
 
 agesApp.populateHarvard = (item) => {
-   $('.gallery').append(`\
-      <div class="gallery-object">\
-         <figure>\
-            <img src=${item.primaryimageurl}>\
-         </figure>\
-         <div class="gallery-object-text">\
-            <h2>Harvard Title</h2>\
-            <h3>${item.title}</h3>\
-            <h2>Artist</h2>\
-            <h3>${item.people}</h3>\
-            <a class="gallery-object-link" href="${item.url}" target="_blank">More Information</a>\
-         </div>\
-      </div>\
-   `)
+   const image = $('<img>').attr('src',item.primaryimageurl);
+   const titleLabel = $('<h2>').text('Harvard Title');
+   const title = $('<h3>').text(item.title);
+   const artistLabel = $('<h2>').text('Artist');
+   const artLink = $('<a class="gallery-object-link" target="_blank">').attr('href',item.url).text('More Information');
+   const imgFigure = $('<figure>').append(image);
+   const textBlock = $('<div class="gallery-object-text">').append(titleLabel, title);
+
+   // Check to see if there is an artist
+   if (item.people) {
+      const artist = $('<h3>').text(item.people[0].name);
+      textBlock.append(artistLabel, artist);
+   }
+   textBlock.append(artLink);
+
+   const container = $('<div class="gallery-object">').append(imgFigure, textBlock);
+   $('.gallery').append(container);
 }
-
-// agesApp.populateHarvard = () => {
-//    $('.gallery-2').append(`\
-//       <div class="gallery-object">\
-//          <figure>\
-//             <img src=${Harvard[0].records[itemNum].primaryimageurl}>\
-//          </figure>\
-//          <div class="gallery-object-text">\
-//             <h2>Harvard Title</h2>\
-//             <h3>${Harvard[0].records[itemNum].title}</h3>\
-//             <h2>Artist</h2>\
-//             <h3>${Harvard[0].records[itemNum].people}</h3>\
-//             <a class="gallery-object-link" href="${Harvard[0].records[itemNum].url}" target="_blank">More Information</a>\
-//          </div>\
-//       </div>\
-//    `)
-// }
-
-
-
-
 
 //This function displays the art on the page.
 agesApp.displayAllArt = (object, century) => {
-   
    //Transforms the slider input to a century name string.
    let centuryToString = agesApp.numberToCentury(century);
-
    //Awaits the promise from the ajax call
    $.when(agesApp.getRijks(object, century),agesApp.getHarvard(object,centuryToString))
-
    //returning the promises from both Rijks and Harvard
    .then((Rijks, Harvard) => {
-      console.log(Rijks, Harvard);
-
-      rijksObjects = Rijks[0].artObjects;
-      harvardObjects = Harvard[0].records;
-
-      //Empty the two image galleries
+      rijksObjects = Rijks[0].artObjects.slice();
+      harvardObjects = Harvard[0].records.slice();
+      //Empty the image galleries
       $('.gallery').empty();
-      // $('.gallery-2').empty();
-
-
-      //A variable for the following if loops.
+      // A variable for the following "if" loops.
       let i = 0;
       //while one of the responses still has objects.
       while (rijksObjects.length > 0 || harvardObjects.length > 0) {
          if (i % 2 === 0 && rijksObjects.length > 0) {
-            console.log('R');
+            // console.log('R');
             let rPop = rijksObjects.pop();
             agesApp.populateRijks(rPop);
          }
          if (i % 2 === 1 && harvardObjects.length > 0) {
-            console.log('H');
+            // console.log('H');
             let hPop = harvardObjects.pop();
+            console.log(hPop);
             agesApp.populateHarvard(hPop);
          }
          i++;
