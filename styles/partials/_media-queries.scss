@@ -24,3 +24,17 @@
       }
    }
 }
+
+@media (max-width : 620px){
+   .object-input{
+       margin-bottom : 20px;
+   }
+
+   .object-input-container{
+       flex-wrap : wrap;
+   }
+
+   .century-input{
+       margin-top : 70px;
+   }
+}
