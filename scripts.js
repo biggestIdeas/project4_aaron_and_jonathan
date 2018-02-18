@@ -42,7 +42,7 @@ agesApp.defaultSelection = () => {
    const timePeriod = (Object.values(search)[0])
    $('.object-input').val(ranInput);
    $('.century-input').val(timePeriod);
-   // agesApp.handleInputChange();
+   agesApp.handleInputChange();
 }
 
 // object to contain the styles that pertain to various periods that can be selected
@@ -206,7 +206,6 @@ agesApp.weaveAndDisplayResults = function(rijksResponse,harvardResponse){
             }
             if (i % 2 === 1 && harvardObjects.length > 0) {
                   let hPop = harvardObjects.pop();
-                  console.log(hPop);
                   agesApp.displayHarvardArtObject(hPop);
             }
             i++;
@@ -219,15 +218,17 @@ agesApp.numberToCentury = function(num) {
    return agesApp.periodArray[numString];
 };
 
+// alert user that no results could be found
 agesApp.displayNoResults = function(){
       let century = agesApp.periodArray[$('.century-input').val().toString()];
       let object = $('.object-input').val();
       let pluralMod = '';
+      
       if(!object.endsWith('s')){
             pluralMod = "the";
       }
 
-      $('.gallery').append(`<h3> The ${century} was a bad time for ${pluralMod} ${object}</h3>`)      
+      $('.gallery').append(`<h3 class = "no-results-message"> The ${century} was a bad time for ${pluralMod} ${object}...</h3>`)      
 }
 
 agesApp.setPeriodStyles = function(){
@@ -306,27 +307,24 @@ agesApp.setPeriodStyles = function(){
       
 }
 
+// apply the relevant styles for a given periodNumber
 agesApp.applyPeriodStyle = function(periodNumber){
       let styleObj = agesApp.getStylesForPeriod(periodNumber);
-      //let bgStyle = styleObj["background"];
       let headerStyle = styleObj["header"];
       let centuryToSearch = styleObj["century-to-search"];
 
       if(agesApp.lastSelectedPeriod !=null){
             let lastStyleObj = agesApp.getStylesForPeriod(agesApp.lastSelectedPeriod);
-           // let lastBgStyle = lastStyleObj["background"];
             let lastHeaderStyle = lastStyleObj["header"];
             let lastCenturyToSearch = lastStyleObj["century-to-search"];
-           // $('body').removeClass(lastBgStyle);
+
             $('.sub-header').removeClass(lastHeaderStyle);
             $('.century-to-search').removeClass(lastCenturyToSearch);
       }
       agesApp.lastSelectedPeriod = periodNumber;
 
-     // $('body').addClass(bgStyle);
       $('.sub-header').addClass(headerStyle);
       $('.century-to-search').addClass(centuryToSearch);
-      console.log($('body').attr('class'));
 }
 
 agesApp.displayPeriodToSearchIn = function(periodNumber){
@@ -342,8 +340,6 @@ agesApp.init = () => {
 
    agesApp.applyPeriodStyle($('.century-input').val());
    agesApp.displayPeriodToSearchIn($('.century-input').val());
-
-   console.log(agesApp.periodStyles);
 }
 
 $(function () {
