@@ -70,14 +70,23 @@ agesApp.getStylesForPeriod = function(periodNumber){
 // applies event listeners to object text input
 agesApp.setupObjectInput = function () {
    $('.object-input').change(function () {
-      agesApp.displayAllArt($(this).val(), $('.century-input').val());
+      agesApp.handleInputChange();
    })
+}
+
+// on an input change, display art to the page if there are valid inputs
+agesApp.handleInputChange = function(){
+      let userObjectInput = $('.object-input').val();
+      let centuryInput = $('.century-input').val();
+      if(userObjectInput !== ''){
+            agesApp.displayAllArt(userObjectInput,centuryInput);
+      }
 }
 
 // applies event listeners to century slider input
 agesApp.setupSlider = function(){
       $('.century-input').on("change",function(){
-            agesApp.displayAllArt($('.object-input').val(), $(this).val());
+            agesApp.handleInputChange();
       });
 
       $('.century-input').on("input",function(){
@@ -183,6 +192,11 @@ agesApp.displayAllArt = (object, century) => {
 agesApp.weaveAndDisplayResults = function(rijksResponse,harvardResponse){
       let rijksObjects = rijksResponse[0].artObjects.slice();
       let harvardObjects = harvardResponse[0].records.slice();
+
+      if(!rijksObjects.length > 0 && !harvardObjects.length > 0){
+            agesApp.displayNoResults();
+      }
+
       let i = 0;
       //while one of the responses still has objects.
       while (rijksObjects.length > 0 || harvardObjects.length > 0) {
@@ -205,6 +219,16 @@ agesApp.numberToCentury = function(num) {
    return agesApp.periodArray[numString];
 };
 
+agesApp.displayNoResults = function(){
+      let century = agesApp.periodArray[$('.century-input').val().toString()];
+      let object = $('.object-input').val();
+      let pluralMod = '';
+      if(!object.endsWith('s')){
+            pluralMod = "the";
+      }
+
+      $('.gallery').append(`<h3> The ${century} was a bad time for ${pluralMod} ${object}</h3>`)      
+}
 
 agesApp.setPeriodStyles = function(){
       // 1) Ancient
