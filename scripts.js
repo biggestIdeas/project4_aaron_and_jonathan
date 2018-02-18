@@ -28,6 +28,23 @@ agesApp.periodArray = {
    '20': '21st century'
 };
 
+agesApp.defaultSelectionArray = [
+   {'dog': '8' },
+   {'man': '20'},
+   {'bowl': '0'}
+]
+
+//A function that applies default selections upon initialization of the app.
+agesApp.defaultSelection = () => {
+   const ran = Math.floor(Math.random() * agesApp.defaultSelectionArray.length);
+   const search = agesApp.defaultSelectionArray[ran];
+   const ranInput = (Object.keys(search)[0]);
+   const timePeriod = (Object.values(search)[0])
+   $('.object-input').val(ranInput);
+   $('.century-input').val(timePeriod);
+   // agesApp.handleInputChange();
+}
+
 // object to contain the styles that pertain to various periods that can be selected
 agesApp.periodStyles = {};
 
@@ -111,7 +128,7 @@ agesApp.displayRijksmuseumArtObject = (item) => {
             <img src=${item.webImage.url}>\
          </figure>\
          <div class="gallery-object-text">\
-            <h2>Rijks Title</h2>\
+            <h2>Title</h2>\
             <h3>${item.title}</h3>\
             <h2>Artist</h2>\
             <h3>${item.principalOrFirstMaker}</h3>\
@@ -124,7 +141,7 @@ agesApp.displayRijksmuseumArtObject = (item) => {
 // add an item from a Harvard Art API response to DOM
 // (object) -> null
 agesApp.displayHarvardArtObject = (item) => {
-      const titleLabel = $('<h2>').text('Harvard Title');
+      const titleLabel = $('<h2>').text('Title');
       const title = $('<h3>').text(item.title);
       const artistLabel = $('<h2>').text('Artist');
       const artLink = $('<a class="gallery-object-link" target="_blank">').attr('href',item.url).text('More Information');
@@ -294,6 +311,7 @@ agesApp.displayPeriodToSearchIn = function(periodNumber){
 
 
 agesApp.init = () => {
+   agesApp.defaultSelection();
    agesApp.setupSlider();
    agesApp.setupObjectInput();
    agesApp.setPeriodStyles();
