@@ -28,12 +28,14 @@ agesApp.periodArray = {
    '20': '21st century'
 };
 
+//Some default search values upon page load.
 agesApp.defaultSelectionArray = [
    {'dog': '18' },
-   {'dog': '3' },
+   {'food': '2' },
    {'man': '20'},
    {'bowl': '0'},
-   {'child': '1'}
+   {'child': '1'},
+   {'water': '17'},
 ]
 
 //A function that applies default selections upon initialization of the app.
@@ -158,10 +160,9 @@ agesApp.displayHarvardArtObject = (item) => {
       const title = $('<h3>').text(item.title);
       const artistLabel = $('<h2>').text('Artist');
       const artLink = $('<a class="gallery-object-link" target="_blank">').attr('href',item.url).text('More Information');
-
       const container = $('<div class="gallery-object">');
-
       const textBlock = $('<div class="gallery-object-text">').append(titleLabel, title);
+
       if (item.people) {
             const artist = $('<h3>').text(item.people[0].name);
             textBlock.append(artistLabel, artist);
@@ -241,7 +242,6 @@ agesApp.setPeriodStyles = function(){
       agesApp.addStyleForPeriod(-2,"header","header-ancient");
       agesApp.addStyleForPeriod(-1,"header","header-ancient");
 
-
       agesApp.addStyleForPeriod(-3,"century-to-search","font-ancient");
       agesApp.addStyleForPeriod(-2,"century-to-search","font-ancient");
       agesApp.addStyleForPeriod(-1,"century-to-search","font-ancient");
@@ -307,8 +307,6 @@ agesApp.setPeriodStyles = function(){
       // 9) 2000s
       agesApp.addStyleForPeriod(20,"header","header-modern");
       agesApp.addStyleForPeriod(20,"century-to-search","font-21st-century");
-
-      
 }
 
 // apply the relevant styles for a given periodNumber
@@ -335,13 +333,10 @@ agesApp.displayPeriodToSearchIn = function(periodNumber){
       $('.century-to-search').text(agesApp.periodArray[periodNumber.toString()]);
 }
 
-agesApp.smooth = function(){
-      $('a').smoothScroll({
-            offset : 100
-      });
-      console.log($('a').smoothScroll);
+agesApp.smooth = () => {
+   $('a').smoothScroll({
+   });
 }
-
 
 agesApp.init = () => {
    agesApp.defaultSelection();
