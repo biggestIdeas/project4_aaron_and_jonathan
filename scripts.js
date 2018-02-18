@@ -335,10 +335,11 @@ agesApp.displayPeriodToSearchIn = function(periodNumber){
       $('.century-to-search').text(agesApp.periodArray[periodNumber.toString()]);
 }
 
-agesApp.smooth = () => {
-   $('.arrow-up').smoothScroll({
-      speed: 100,
-   });
+agesApp.smooth = function(){
+      $('a').smoothScroll({
+            offset : 100
+      });
+      console.log($('a').smoothScroll);
 }
 
 
