@@ -1,0 +1,26 @@
+@media (max-width: 950px ) {
+   .gallery-object-text {
+      h2 {
+         font-size: 14px;
+      }
+      
+      h3 {
+         font-size: 16px;
+      }
+   }
+}
+
+@media (max-width: 750px) {
+   .gallery-object {
+      flex-wrap: wrap;
+
+      figure {
+         width: 100%;
+      }
+   
+      .gallery-object-text {
+         width: 100%;
+         background: linear-gradient(to top, rgba(128, 128, 128, 0.075), rgba(128, 128, 128, 0.185));
+      }
+   }
+}
