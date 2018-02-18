@@ -29,9 +29,11 @@ agesApp.periodArray = {
 };
 
 agesApp.defaultSelectionArray = [
-   {'dog': '8' },
+   {'dog': '18' },
+   {'dog': '3' },
    {'man': '20'},
-   {'bowl': '0'}
+   {'bowl': '0'},
+   {'child': '1'}
 ]
 
 //A function that applies default selections upon initialization of the app.
@@ -42,7 +44,7 @@ agesApp.defaultSelection = () => {
    const timePeriod = (Object.values(search)[0])
    $('.object-input').val(ranInput);
    $('.century-input').val(timePeriod);
-   // agesApp.handleInputChange();
+   agesApp.handleInputChange();
 }
 
 // object to contain the styles that pertain to various periods that can be selected
@@ -109,6 +111,7 @@ agesApp.getArtFromRijksmuesumAPI = (object, _century) => {
          q: object,
          imgonly: true,
          "f.dating.period": _century,
+         ps: 100,
       }
    });
 };
@@ -124,6 +127,7 @@ agesApp.getArtFromHarvardArtAPI = (object, _century) => {
             apikey : "83ec36b0-1103-11e8-967e-6df5e50af9ba",
             century: _century,
             title : object,
+            size: 50,
       }            
    });
 };
@@ -137,7 +141,7 @@ agesApp.displayRijksmuseumArtObject = (item) => {
             <img src=${item.webImage.url}>\
          </figure>\
          <div class="gallery-object-text">\
-            <h2>Title</h2>\
+            <h2>Title/Description</h2>\
             <h3>${item.title}</h3>\
             <h2>Artist</h2>\
             <h3>${item.principalOrFirstMaker}</h3>\
@@ -150,7 +154,7 @@ agesApp.displayRijksmuseumArtObject = (item) => {
 // add an item from a Harvard Art API response to DOM
 // (object) -> null
 agesApp.displayHarvardArtObject = (item) => {
-      const titleLabel = $('<h2>').text('Title');
+      const titleLabel = $('<h2>').text('Title/Description');
       const title = $('<h3>').text(item.title);
       const artistLabel = $('<h2>').text('Artist');
       const artLink = $('<a class="gallery-object-link" target="_blank">').attr('href',item.url).text('More Information');
@@ -333,6 +337,12 @@ agesApp.displayPeriodToSearchIn = function(periodNumber){
       $('.century-to-search').text(agesApp.periodArray[periodNumber.toString()]);
 }
 
+agesApp.smooth = () => {
+   $('.arrow-up').smoothScroll({
+      speed: 100,
+   });
+}
+
 
 agesApp.init = () => {
    agesApp.defaultSelection();
@@ -342,6 +352,7 @@ agesApp.init = () => {
 
    agesApp.applyPeriodStyle($('.century-input').val());
    agesApp.displayPeriodToSearchIn($('.century-input').val());
+   agesApp.smooth();
 
    console.log(agesApp.periodStyles);
 }
