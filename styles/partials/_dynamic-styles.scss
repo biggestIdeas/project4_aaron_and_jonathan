@@ -1,0 +1,98 @@
+
+
+//dynamic fonts start
+
+.font-ancient{
+    // color : blue;
+     font-family: Papyrus, fantasy;
+     font-size : 24px;
+ }
+ 
+ .font-classical{
+     // color : blue;
+      font-family: 'Times New Roman';
+      font-size : 24px;
+      text-transform : uppercase;
+  }
+ 
+ .font-dark-ages{
+     font-family: 'MedievalSharp', cursive;
+     font-size : 24px;
+ }
+ 
+ .font-medieval{
+     font-family: 'UnifrakturCook', cursive;
+     font-size : 28px;
+ }
+ 
+ .font-renaissance{
+     font-family: 'Agincourt', cursive;
+     font-size : 28px;    
+ }
+ 
+ .font-19th-century{
+     font-family: 'Rye', cursive;
+     font-size : 24px;
+ }
+ 
+ .font-20th-century{
+     font-family : 'Courier', sans-serif;
+     font-size : 24px;
+ }
+ 
+ .font-21st-century{
+     font-family: 'Orbitron', sans-serif;
+     font-size : 24px;
+ }
+
+ //dynamic fonts end
+
+
+
+ //dyamic headers start
+ .header-ancient{
+    background-image : url("../assets/header-ancient2.jpg");
+    background-size : 150px 100px;
+   background-position : bottom;
+   background-repeat : repeat;
+}
+
+.header-classical{
+    background-image : url("../assets/header-ancient.jpg"); 
+}
+
+.header-medieval{
+    background-image : url("../assets/header-medieval.jpg");
+    background-size : 250px 250px;
+}
+
+.header-dark-ages{
+    background-image : url("../assets/header-dark-ages.jpg");
+    background-size : 400px 400px;
+    background-position : middle;
+}
+
+.header-renaissance{
+    background-image : url("../assets/header-renaissance.jpg");
+   // background-size : 100px 250px;
+}
+
+.header-rococo{
+    background-image : url("../assets/header-rococo.jpg");
+}
+
+.header-victorian{
+    background-image : url("../assets/header-victorian.jpg");
+}
+
+.header-art-deco{
+    background-image : url("../assets/header-art-deco.jpg");
+    background-size : 200px 150px;
+}
+
+.header-modern{
+    background-image : url("../assets/header-modern.jpg");
+    background-size : 200px 150px;
+}
+
+//dynamic headers end
