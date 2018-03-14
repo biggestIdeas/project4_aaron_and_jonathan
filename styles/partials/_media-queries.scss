@@ -38,3 +38,22 @@
        margin-top : 70px;
    }
 }
+
+@media (max-width: 385px) {
+   #top {
+      h2 {
+         font-size: 15px;
+      }
+      .object-input {
+         font-size: 18px;
+      }
+      .century-to-search {
+         width: 150px;
+      }
+      .in-century-wrapper {
+         span {
+            font-size: 18px;
+         }
+      }
+   }
+}
