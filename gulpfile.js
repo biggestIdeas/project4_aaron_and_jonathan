@@ -13,7 +13,7 @@ uglify = require('gulp-uglify');
 
 gulp.task('bs', function() {
 browserSync.init({
-   server: "./"
+   server: "."
 });
 });
 
