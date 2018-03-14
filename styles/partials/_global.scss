@@ -11,8 +11,9 @@ body {
 }
 
 *{
-    margin : 0;
-    padding : 0;
+   box-sizing: border-box; 
+   margin : 0;
+   padding : 0;
 }
 
 .century-input{
@@ -88,6 +89,21 @@ body {
     }
 }
 
+.in-century-wrapper {
+   display: flex;
+   align-items: center;
+}
+
+.century-to-search {
+   display: inline-block;
+   width: 220px;
+   height: 50px;
+   line-height: 5px;
+   // font-size: 24px;
+   position: relative;
+   top: 25px;
+}
+
 .century-input-container{
     margin-top : 40px;
 }
@@ -103,7 +119,7 @@ body {
 }
 
 .in-the{
-    margin : 20px;
+    margin : 10px;
 }
 
 @media (max-width : 620px){
