@@ -10,7 +10,8 @@
    min-height: 250px;
    display: flex;
    justify-content: space-around;
-   padding: 30px;
+   margin: 40px;
+   box-shadow : 1px 3px 5px grey;
 
    figure {
       width: 50%;
@@ -22,10 +23,12 @@
       align-items: center;
       justify-content: space-around;
       padding: 20px 30px;
+      
 
       img {
          max-width: 100%;
          max-height: 400px;
+         box-shadow : 1px 2px 2px grey;
       }
    }
 
@@ -41,17 +44,18 @@
    }
 
    a {
-      font-size: 13px;
+      font-size: 18px;
       display: block;
       text-decoration: none;
       font-weight: 700;
       color: $gallery-header-color;
       border: solid 2px $gallery-header-color;
       padding: 3px 0 4px 0;
+      padding : 15px;
       transition: all 0.2s;
-      border-radius: 25px;
+      border-radius: 50px;
       text-align: center;
-      width: 150px;
+      width: 225px;
       margin: 20px auto;
 
       &:hover {
